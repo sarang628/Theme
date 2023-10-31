@@ -31,6 +31,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.sarang.theme.R
 
 private val LightColors = lightColorScheme(
     primary = md_theme_light_primary,
@@ -104,31 +105,32 @@ fun TorangTheme(
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
+    val context = LocalContext.current
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+        /*dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
+        }*/
         darkTheme -> DarkColors
         else -> LightColors
     }
     val view = LocalView.current
-//    if (!view.isInEditMode) {
-//        val systemUiController = rememberSystemUiController()
-//        val useDarkIcons = !isSystemInDarkTheme()
-//        val window = (view.context as Activity).window
-//        WindowCompat.setDecorFitsSystemWindows(window, false)
-//        DisposableEffect(systemUiController, useDarkIcons) {
-//            // Update all of the system bar colors to be transparent, and use
-//            // dark icons if we're in light theme
-//            systemUiController.setSystemBarsColor(
-//                color = Color.Transparent,
-//                darkIcons = useDarkIcons
-//            )
-//            onDispose {}
-//        }
-//    }
+    if (!view.isInEditMode) {
+        val systemUiController = rememberSystemUiController()
+        val useDarkIcons = !isSystemInDarkTheme()
+        val window = (view.context as Activity).window
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+        DisposableEffect(systemUiController, useDarkIcons) {
+            // Update all of the system bar colors to be transparent, and use
+            // dark icons if we're in light theme
+            systemUiController.setSystemBarsColor(
+                color = Color.Transparent,
+                //Color(context.getColor(R.color.colorSecondaryLight)),
+                darkIcons = useDarkIcons
+            )
+            onDispose {}
+        }
+    }
 
     MaterialTheme(
         colorScheme = colorScheme,
