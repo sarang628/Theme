@@ -107,10 +107,10 @@ fun TorangTheme(
 ) {
     val context = LocalContext.current
     val colorScheme = when {
-        /*dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }*/
+        }
         darkTheme -> DarkColors
         else -> LightColors
     }
@@ -125,7 +125,6 @@ fun TorangTheme(
             // dark icons if we're in light theme
             systemUiController.setSystemBarsColor(
                 color = Color.Transparent,
-                //Color(context.getColor(R.color.colorSecondaryLight)),
                 darkIcons = useDarkIcons
             )
             onDispose {}
