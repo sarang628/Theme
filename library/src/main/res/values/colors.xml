@@ -20,5 +20,6 @@
     <color name="light_gray">#EEEEEE</color>
     <color name="med_gray">#DEDEDE</color>
     <color name="white">#FFFFFF</color>
+    <color name="yellow">#E5DE00</color>
 
 </resources>
