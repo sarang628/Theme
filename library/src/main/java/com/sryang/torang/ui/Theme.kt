@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.sunflower.ui
+package com.sryang.torang.ui
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -26,10 +25,70 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
-import androidx.core.view.WindowCompat
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.samples.apps.sunflower.ui.Shapes
+import com.google.samples.apps.sunflower.ui.Typography
+import com.google.samples.apps.sunflower.ui.md_theme_dark_background
+import com.google.samples.apps.sunflower.ui.md_theme_dark_error
+import com.google.samples.apps.sunflower.ui.md_theme_dark_errorContainer
+import com.google.samples.apps.sunflower.ui.md_theme_dark_inverseOnSurface
+import com.google.samples.apps.sunflower.ui.md_theme_dark_inversePrimary
+import com.google.samples.apps.sunflower.ui.md_theme_dark_inverseSurface
+import com.google.samples.apps.sunflower.ui.md_theme_dark_onBackground
+import com.google.samples.apps.sunflower.ui.md_theme_dark_onError
+import com.google.samples.apps.sunflower.ui.md_theme_dark_onErrorContainer
+import com.google.samples.apps.sunflower.ui.md_theme_dark_onPrimary
+import com.google.samples.apps.sunflower.ui.md_theme_dark_onPrimaryContainer
+import com.google.samples.apps.sunflower.ui.md_theme_dark_onSecondary
+import com.google.samples.apps.sunflower.ui.md_theme_dark_onSecondaryContainer
+import com.google.samples.apps.sunflower.ui.md_theme_dark_onSurface
+import com.google.samples.apps.sunflower.ui.md_theme_dark_onSurfaceVariant
+import com.google.samples.apps.sunflower.ui.md_theme_dark_onTertiary
+import com.google.samples.apps.sunflower.ui.md_theme_dark_onTertiaryContainer
+import com.google.samples.apps.sunflower.ui.md_theme_dark_outline
+import com.google.samples.apps.sunflower.ui.md_theme_dark_outlineVariant
+import com.google.samples.apps.sunflower.ui.md_theme_dark_primary
+import com.google.samples.apps.sunflower.ui.md_theme_dark_primaryContainer
+import com.google.samples.apps.sunflower.ui.md_theme_dark_scrim
+import com.google.samples.apps.sunflower.ui.md_theme_dark_secondary
+import com.google.samples.apps.sunflower.ui.md_theme_dark_secondaryContainer
+import com.google.samples.apps.sunflower.ui.md_theme_dark_surface
+import com.google.samples.apps.sunflower.ui.md_theme_dark_surfaceTint
+import com.google.samples.apps.sunflower.ui.md_theme_dark_surfaceVariant
+import com.google.samples.apps.sunflower.ui.md_theme_dark_tertiary
+import com.google.samples.apps.sunflower.ui.md_theme_dark_tertiaryContainer
+import com.google.samples.apps.sunflower.ui.md_theme_light_background
+import com.google.samples.apps.sunflower.ui.md_theme_light_error
+import com.google.samples.apps.sunflower.ui.md_theme_light_errorContainer
+import com.google.samples.apps.sunflower.ui.md_theme_light_inverseOnSurface
+import com.google.samples.apps.sunflower.ui.md_theme_light_inversePrimary
+import com.google.samples.apps.sunflower.ui.md_theme_light_inverseSurface
+import com.google.samples.apps.sunflower.ui.md_theme_light_onBackground
+import com.google.samples.apps.sunflower.ui.md_theme_light_onError
+import com.google.samples.apps.sunflower.ui.md_theme_light_onErrorContainer
+import com.google.samples.apps.sunflower.ui.md_theme_light_onPrimary
+import com.google.samples.apps.sunflower.ui.md_theme_light_onPrimaryContainer
+import com.google.samples.apps.sunflower.ui.md_theme_light_onSecondary
+import com.google.samples.apps.sunflower.ui.md_theme_light_onSecondaryContainer
+import com.google.samples.apps.sunflower.ui.md_theme_light_onSurface
+import com.google.samples.apps.sunflower.ui.md_theme_light_onSurfaceVariant
+import com.google.samples.apps.sunflower.ui.md_theme_light_onTertiary
+import com.google.samples.apps.sunflower.ui.md_theme_light_onTertiaryContainer
+import com.google.samples.apps.sunflower.ui.md_theme_light_outline
+import com.google.samples.apps.sunflower.ui.md_theme_light_outlineVariant
+import com.google.samples.apps.sunflower.ui.md_theme_light_primary
+import com.google.samples.apps.sunflower.ui.md_theme_light_primaryContainer
+import com.google.samples.apps.sunflower.ui.md_theme_light_scrim
+import com.google.samples.apps.sunflower.ui.md_theme_light_secondary
+import com.google.samples.apps.sunflower.ui.md_theme_light_secondaryContainer
+import com.google.samples.apps.sunflower.ui.md_theme_light_surface
+import com.google.samples.apps.sunflower.ui.md_theme_light_surfaceTint
+import com.google.samples.apps.sunflower.ui.md_theme_light_surfaceVariant
+import com.google.samples.apps.sunflower.ui.md_theme_light_tertiary
+import com.google.samples.apps.sunflower.ui.md_theme_light_tertiaryContainer
 
 private val LightColors = lightColorScheme(
     primary = md_theme_light_primary,
@@ -103,7 +162,6 @@ fun TorangTheme(
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    val context = LocalContext.current
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
@@ -117,13 +175,11 @@ fun TorangTheme(
     if (!view.isInEditMode) {
         val systemUiController = rememberSystemUiController()
         val useDarkIcons = !isSystemInDarkTheme()
-        val window = (view.context as Activity).window
-        WindowCompat.setDecorFitsSystemWindows(window, true)
         DisposableEffect(systemUiController, useDarkIcons) {
             // Update all of the system bar colors to be transparent, and use
             // dark icons if we're in light theme
             systemUiController.setSystemBarsColor(
-                color = colorScheme.background,
+                color = Color.Transparent,
                 darkIcons = useDarkIcons
             )
             onDispose {}
