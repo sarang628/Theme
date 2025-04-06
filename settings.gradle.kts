@@ -15,6 +15,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ThemeTestApp"
+rootProject.name = "TorangTheme"
 include(":app")
 include(":library")
